@@ -3,79 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover Winnipeg</title>
+    <title>Discover Winnipeg | Culture, Nature, History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Reset & basic styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; scroll-behavior: smooth; }
-        a { text-decoration: none; color: inherit; }
+        /* CSS 变量：统一管理颜色，方便修改 */
+        :root {
+            --primary-green: #1A531A; /* 深沉的大气绿 */
+            --accent-green: #2E7D32;  /* 用于链接悬停的亮绿 */
+            --text-dark: #222222;    /* 接近纯黑的文字 */
+            --text-light: #666666;   /* 用于描述的深灰 */
+            --bg-pure: #FFFFFF;      /* 纯白背景 */
+            --bg-footer: #F7F7F7;    /* 极浅的灰色页脚 */
+            --font-main: 'Inter', sans-serif;
+        }
 
-        /* Header */
+        /* 基础样式重置 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: var(--font-main); 
+            color: var(--text-dark); 
+            line-height: 1.7; /* 增加行高，提升阅读体验 */
+            scroll-behavior: smooth; 
+            background: var(--bg-pure);
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+
+        /* 大气 Hero 头部 */
         header {
-            background: linear-gradient(to right, #4CAF50, #81C784);
+            background-color: var(--primary-green);
             color: white;
-            padding: 60px 20px;
+            padding: 120px 20px; /* 大幅增加 padding，营造空间感 */
             text-align: center;
         }
-        header h1 { font-size: 3rem; margin-bottom: 10px; }
-        header p { font-size: 1.2rem; }
+        header h1 { 
+            font-size: 3.5rem; /* 字体加大 */
+            font-weight: 800; 
+            letter-spacing: -1.5px; /* 紧凑的字间距，更有现代感 */
+            margin-bottom: 15px; 
+        }
+        header p { 
+            font-size: 1.25rem; 
+            opacity: 0.9; 
+            max-width: 600px; 
+            margin: auto; 
+            font-weight: 400;
+        }
 
-        /* Navigation */
+        /* 简约 Sticky 导航栏 */
         nav {
             position: sticky;
             top: 0;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.98); /* 稍微透明，更灵动 */
+            border-bottom: 1px solid #EAEAEA; /* 极细的下边框 */
             display: flex;
             justify-content: center;
-            gap: 20px;
-            padding: 10px 0;
+            gap: 15px;
+            padding: 15px 0;
             z-index: 1000;
         }
         nav a {
-            padding: 10px 15px;
-            font-weight: bold;
-            color: #4CAF50;
-            transition: 0.3s;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-dark);
         }
-        nav a:hover { background: #f0f0f0; border-radius: 5px; }
+        nav a:hover { 
+            color: var(--accent-green);
+        }
 
-        /* Section */
-        section {
-            padding: 60px 20px;
-            max-width: 900px;
+        /* 主体内容区域 */
+        main {
+            max-width: 1100px; /* 加宽布局 */
             margin: auto;
+            padding: 40px 20px 80px;
         }
-        section h2 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-            font-size: 2rem;
-            text-align: center;
-        }
-        .card {
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .card img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-        .card p { text-align: center; font-size: 1rem; }
 
-        /* Footer */
+        section {
+            padding: 80px 0; /* 板块之间保持大留白 */
+        }
+
+        section h2 {
+            color: var(--primary-green);
+            margin-bottom: 60px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase; /* 大写，更具仪式感 */
+            letter-spacing: 2px;
+        }
+
+        /* 现代化的交替卡片布局 (图文并排) */
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 60px; /* 图片和文字的距离 */
+            background: var(--bg-pure);
+            border-radius: 0; /* 去掉圆角 */
+            padding: 0;
+            margin: 0;
+            box-shadow: none; /* 去掉灰色背景块的投影 */
+        }
+
+        /* 奇数板块：左图右文 */
+        section:nth-child(odd) .card {
+            flex-direction: row;
+        }
+        /* 偶数板块：左文右图 */
+        section:nth-child(even) .card {
+            flex-direction: row-reverse;
+        }
+
+        /* 图片样式 */
+        .card img {
+            flex: 0 0 50%; /* 图片占一半宽度 */
+            max-width: 50%;
+            height: 350px; /* 固定高度，保持整齐 */
+            object-fit: cover; /* 自动裁剪，防止图片变形 */
+            border-radius: 4px; /* 极小的圆角 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* 极轻的投影，增加立体感 */
+        }
+
+        /* 文字样式 */
+        .card-content {
+            flex: 1;
+            text-align: left; /* 文字靠左，更专业 */
+        }
+        .card-content p { 
+            font-size: 1.05rem; 
+            color: var(--text-light); 
+            font-weight: 400;
+        }
+
+        /* 移动端适配 (响应式) */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .card, section:nth-child(even) .card { 
+                flex-direction: column; /* 手机端堆叠显示 */
+                gap: 30px; 
+            }
+            .card img { 
+                flex: 0 0 100%; 
+                max-width: 100%; 
+                height: 250px; 
+            }
+            .card-content { text-align: center; }
+        }
+
+        /* 极简页脚 */
         footer {
             text-align: center;
-            padding: 20px;
-            background: #f4f4f4;
-            margin-top: 40px;
-            font-size: 0.9rem;
+            padding: 30px;
+            background: var(--bg-footer);
+            font-size: 0.85rem;
+            color: #999999;
+            border-top: 1px solid #EAEAEA;
         }
     </style>
 </head>
@@ -83,7 +168,7 @@
 
 <header>
     <h1>Discover Winnipeg</h1>
-    <p>The heart of Manitoba, full of culture, history, and nature</p>
+    <p>The heart of Manitoba. Full of culture, history, and raw nature.</p>
 </header>
 
 <nav>
@@ -92,32 +177,40 @@
     <a href="#history">History</a>
 </nav>
 
-<section id="culture">
-    <h2>Culture</h2>
-    <div class="card">
-        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg Culture">
-        <p>Winnipeg is known for its vibrant arts scene, with galleries, theaters, and festivals throughout the year. The city hosts the famous Winnipeg Folk Festival and the Royal Winnipeg Ballet, bringing world-class performances to local audiences.</p>
-    </div>
-</section>
+<main>
+    <section id="culture">
+        <h2>Culture</h2>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-example-winnipeg-ballet.jpg?q=80&w=600" alt="Winnipeg Royal Ballet Performance">
+            <div class="card-content">
+                <p>Winnipeg is known for its vibrant arts scene, with galleries, theaters, and festivals throughout the year. The city hosts the famous Winnipeg Folk Festival and the Royal Winnipeg Ballet, bringing world-class performances to local audiences.</p>
+            </div>
+        </div>
+    </section>
 
-<section id="nature">
-    <h2>Nature</h2>
-    <div class="card">
-        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg Nature">
-        <p>Winnipeg sits at the meeting point of the Red and Assiniboine Rivers. Outdoor enthusiasts can enjoy The Forks, Assiniboine Park, and the sprawling nature trails. In winter, the city offers ice skating and snow activities for all ages.</p>
-    </div>
-</section>
+    <section id="nature">
+        <h2>Nature</h2>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-example-winnipeg-park.jpg?q=80&w=600" alt="Assiniboine Park and Red River">
+            <div class="card-content">
+                <p>Winnipeg sits at the meeting point of the Red and Assiniboine Rivers. Outdoor enthusiasts can enjoy The Forks, Assiniboine Park, and the sprawling nature trails. In winter, the city offers ice skating and snow activities for all ages.</p>
+            </div>
+        </div>
+    </section>
 
-<section id="history">
-    <h2>History</h2>
-    <div class="card">
-        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg History">
-        <p>Winnipeg has a rich history as a center of trade, settlement, and cultural exchange. From the historic Exchange District to the Manitoba Museum, visitors can explore the city's past and learn about the indigenous peoples and settlers who shaped it.</p>
-    </div>
-</section>
+    <section id="history">
+        <h2>History</h2>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-example-winnipeg-history.jpg?q=80&w=600" alt="Historic Exchange District of Winnipeg">
+            <div class="card-content">
+                <p>Winnipeg has a rich history as a center of trade, settlement, and cultural exchange. From the historic Exchange District to the Manitoba Museum, visitors can explore the city's past and learn about the indigenous peoples and settlers who shaped it.</p>
+            </div>
+        </div>
+    </section>
+</main>
 
 <footer>
-    <p>&copy; 2026 Discover Winnipeg. All rights reserved.</p>
+    <p>&copy; 2026 Discover Winnipeg. Conceptual Design.</p>
 </footer>
 
 </body>
