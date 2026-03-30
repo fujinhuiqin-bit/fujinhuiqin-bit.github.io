@@ -2,25 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Photography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photography | Fujin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; line-height: 1.6; }
-        img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        a { text-decoration: none; color: #2E7D32; font-weight: bold; display: inline-block; margin-top: 30px; border: 1px solid #2E7D32; padding: 10px 20px; border-radius: 5px;}
-        a:hover { background-color: #2E7D32; color: white; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden; /* 确保图片不会溢出圆角 */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            max-width: 800px; /* 摄影页可以稍微宽一点 */
+            width: 100%;
+        }
+
+        /* 顶部大图横幅设计 */
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover; /* 保证图片完美覆盖且不变形 */
+            display: block;
+        }
+
+        .content {
+            padding: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        /* 返回按钮样式 */
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: 2px solid #3498db;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #3498db;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
     </style>
 </head>
 <body>
-
-    <h1>My Passion for Photography</h1>
-    
-    <p>Welcome to my topic page! One of my favorite hobbies is photography.</p>
-    <p>I enjoy capturing moments, exploring different lighting techniques, and framing the perfect shot. It is a great way to express creativity and document life.</p>
-    
-    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vintage Camera">
-    
-    <br>
-    <a href="index.html">Back to Home</a>
-
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Vintage Camera" class="hero-image">
+        
+        <div class="content">
+            <h1>My Passion for Photography</h1>
+            <p>Welcome to my topic page! One of my favorite hobbies is photography.</p>
+            <p>I enjoy capturing moments, exploring different lighting techniques, and framing the perfect shot. It is a great way to express creativity and document life.</p>
+            
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </div>
 </body>
 </html>
