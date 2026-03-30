@@ -5,50 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discover Winnipeg</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            color: #333;
-        }
+        /* Reset & basic styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; scroll-behavior: smooth; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Header */
         header {
-            background: #4CAF50;
+            background: linear-gradient(to right, #4CAF50, #81C784);
             color: white;
-            padding: 20px 0;
+            padding: 60px 20px;
             text-align: center;
         }
+        header h1 { font-size: 3rem; margin-bottom: 10px; }
+        header p { font-size: 1.2rem; }
+
+        /* Navigation */
         nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             justify-content: center;
-            background: #333;
+            gap: 20px;
+            padding: 10px 0;
+            z-index: 1000;
         }
         nav a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            color: #4CAF50;
+            transition: 0.3s;
         }
-        nav a:hover {
-            background: #575757;
-        }
+        nav a:hover { background: #f0f0f0; border-radius: 5px; }
+
+        /* Section */
         section {
-            padding: 40px 20px;
-            max-width: 800px;
+            padding: 60px 20px;
+            max-width: 900px;
             margin: auto;
         }
-        h2 {
+        section h2 {
             color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-align: center;
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        .card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
             margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        .card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .card p { text-align: center; font-size: 1rem; }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 20px;
             background: #f4f4f4;
             margin-top: 40px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -67,20 +94,26 @@
 
 <section id="culture">
     <h2>Culture</h2>
-    <p>Winnipeg is known for its vibrant arts scene, with galleries, theaters, and festivals throughout the year. The city hosts the famous Winnipeg Folk Festival and the Royal Winnipeg Ballet, bringing world-class performances to local audiences.</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Winnipeg_Folklorama_2011.jpg/640px-Winnipeg_Folklorama_2011.jpg" alt="Winnipeg Folklorama Festival">
+    <div class="card">
+        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg Culture">
+        <p>Winnipeg is known for its vibrant arts scene, with galleries, theaters, and festivals throughout the year. The city hosts the famous Winnipeg Folk Festival and the Royal Winnipeg Ballet, bringing world-class performances to local audiences.</p>
+    </div>
 </section>
 
 <section id="nature">
     <h2>Nature</h2>
-    <p>Winnipeg sits at the meeting point of the Red and Assiniboine Rivers. Outdoor enthusiasts can enjoy The Forks, Assiniboine Park, and the sprawling nature trails. In winter, the city offers ice skating and snow activities for all ages.</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Assiniboine_Park_Winnipeg.jpg/640px-Assiniboine_Park_Winnipeg.jpg" alt="Assiniboine Park Winnipeg">
+    <div class="card">
+        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg Nature">
+        <p>Winnipeg sits at the meeting point of the Red and Assiniboine Rivers. Outdoor enthusiasts can enjoy The Forks, Assiniboine Park, and the sprawling nature trails. In winter, the city offers ice skating and snow activities for all ages.</p>
+    </div>
 </section>
 
 <section id="history">
     <h2>History</h2>
-    <p>Winnipeg has a rich history as a center of trade, settlement, and cultural exchange. From the historic Exchange District to the Manitoba Museum, visitors can explore the city's past and learn about the indigenous peoples and settlers who shaped it.</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Exchange_District_Winnipeg.jpg/640px-Exchange_District_Winnipeg.jpg" alt="Exchange District Winnipeg">
+    <div class="card">
+        <img src="ac818c9a-c058-49b7-87a4-75649d09a85d.png" alt="Winnipeg History">
+        <p>Winnipeg has a rich history as a center of trade, settlement, and cultural exchange. From the historic Exchange District to the Manitoba Museum, visitors can explore the city's past and learn about the indigenous peoples and settlers who shaped it.</p>
+    </div>
 </section>
 
 <footer>
