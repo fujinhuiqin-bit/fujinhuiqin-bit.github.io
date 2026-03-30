@@ -7,90 +7,182 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6; /* 极浅的高级灰背景 */
+            background-color: #f4f7f6; 
             color: #333;
-            /* 使用 Flexbox 让内容完美居中 */
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             text-align: center;
+            overflow: hidden; /* 防止烟花粒子飞出边界产生滚动条 */
         }
-
-        /* 现代化的悬浮卡片设计 */
         .container {
             background: #ffffff;
             padding: 60px 50px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05); /* 柔和的阴影 */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
             max-width: 650px;
             width: 90%;
+            position: relative;
+            z-index: 10; /* 文字在烟花层下面，不影响阅读 */
         }
-
-        h1 {
-            font-size: 2.8rem;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 40px;
-        }
-
-        /* 按钮排版 */
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        h1 { font-size: 2.8rem; color: #2c3e50; margin-bottom: 15px; font-weight: 600; }
+        p { font-size: 1.1rem; color: #666; line-height: 1.8; margin-bottom: 40px; }
+        nav { display: flex; justify-content: center; gap: 20px; }
         nav a {
             text-decoration: none;
             color: #ffffff;
-            background-color: #3498db; /* 充满活力的主色调 */
-            padding: 12px 30px;
-            border-radius: 30px; /* 胶囊形状按钮 */
-            font-weight: 600;
-            transition: all 0.3s ease; /* 顺滑的动画过渡 */
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        nav a:hover {
-            background-color: #2980b9;
-            transform: translateY(-3px); /* 鼠标悬停时微微上浮 */
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
-        }
-
-        /* 首页按钮使用线框样式，区分主次 */
-        .nav-outline {
-            background-color: transparent;
-            color: #3498db;
-            border: 2px solid #3498db;
-            box-shadow: none;
-        }
-
-        .nav-outline:hover {
             background-color: #3498db;
-            color: #ffffff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 20; /* 按钮在最上层，永远可点 */
+        }
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* 点击会穿透画布 */
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Welcome to My Site</h1>
         <p>Hello! I am an NSA program student at MITT. Welcome to my personal GitHub Pages website. This site is created to demonstrate web hosting and version control.</p>
         <nav>
-            <a href="index.html" class="nav-outline">Home</a>
+            <a href="index.html" style="background:transparent; color:#3498db; border:2px solid #3498db;">Home</a>
             <a href="photography.html">My Photography</a>
         </nav>
     </div>
+
+    <canvas id="fireworksCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = [];
+        const colors = ['#FF2D55', '#5856D6', '#FF9500', '#FFCC00', '#4CD964', '#5AC8FA', '#aa00ff'];
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // --- 物理升级的核心参数 ---
+                this.size = Math.random() * 4 + 1.5; // 粒子大小
+                
+                // 1. **壮观关键**：初速度要快，炸开范围大，不小家子气
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 9 + 4; 
+                
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                
+                // 2. **持久关键**：消散极慢，粒子能活很久
+                this.alpha = 1;
+                this.decay = 0.005; // 极其缓慢的消失，比之前慢 3 倍
+                
+                // 3. **顺滑下坠关键**：
+                this.gravity = 0.22;    // 加大重力，下坠感强
+                this.friction = 0.985;  // 摩擦力极小，保持高初速，产生大气的感觉
+                
+                // **美感灵魂：渐变拖尾**
+                this.history = []; // 储存粒子过去的轨迹，用于画拖尾
+                this.historyCount = 15; // 拖尾长度
+            }
+
+            update() {
+                // 更新历史轨迹
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > this.historyCount) {
+                    this.history.shift(); // 移除最早的轨迹点
+                }
+
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                
+                // **核心美化逻辑：画出粒子下坠的流尾**
+                for (let i = 0; i < this.history.length; i++) {
+                    const point = this.history[i];
+                    // 尾部越远越细，越透
+                    const size = this.size * (i / this.history.length);
+                    const alpha = this.alpha * (i / this.history.length);
+                    
+                    ctx.globalAlpha = alpha;
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+
+                // 画出粒子的“头”
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+
+        function createFirework(x, y) {
+            // **数量升级**：每次发射 200 个，壮观大气
+            const count = 200;
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 保持背景透明
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) particles.splice(i, 1);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('mousedown', (e) => {
+            createFirework(e.clientX, e.clientY);
+        });
+
+        // 自动随机触发，间隔也稍微调长，给烟花充分散落的时间
+        function autoLaunch() {
+            const rx = Math.random() * (canvas.width * 0.8) + (canvas.width * 0.1);
+            const ry = Math.random() * (canvas.height * 0.4) + (canvas.height * 0.1);
+            createFirework(rx, ry);
+            setTimeout(autoLaunch, Math.random() * 2000 + 2000); 
+        }
+        setTimeout(autoLaunch, 1000);
+    </script>
 </body>
 </html>
